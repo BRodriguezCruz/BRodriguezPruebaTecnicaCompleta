@@ -1,0 +1,464 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BRodriguezPruebaTecnica2CompletaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Artista">
+          <Key>
+            <PropertyRef Name="IdArtista" />
+          </Key>
+          <Property Name="IdArtista" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" />
+          <Property Name="FechaNacimiento" Type="date" Nullable="false" />
+          <Property Name="NombreAtistico" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Disco">
+          <Key>
+            <PropertyRef Name="IdDisco" />
+          </Key>
+          <Property Name="IdDisco" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Duracion" Type="time" Precision="7" />
+          <Property Name="Anio" Type="date" Nullable="false" />
+          <Property Name="Ventas" Type="int" />
+          <Property Name="Disponibilidad" Type="char" MaxLength="5" />
+          <Property Name="IdArtista" Type="int" Nullable="false" />
+          <Property Name="IdGenero" Type="int" Nullable="false" />
+          <Property Name="IdDistribuidora" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Distribuidora">
+          <Key>
+            <PropertyRef Name="IdDistribuidora" />
+          </Key>
+          <Property Name="IdDistribuidora" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="20" />
+          <Property Name="PorcentajeDistribucion" Type="int" />
+          <Property Name="FechaNCreacion" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GeneroMusical">
+          <Key>
+            <PropertyRef Name="IdGenero" />
+          </Key>
+          <Property Name="IdGenero" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Disco__IdArtista__1B0907CE">
+          <End Role="Artista" Type="Self.Artista" Multiplicity="1" />
+          <End Role="Disco" Type="Self.Disco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artista">
+              <PropertyRef Name="IdArtista" />
+            </Principal>
+            <Dependent Role="Disco">
+              <PropertyRef Name="IdArtista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Disco__IdDistrib__1CF15040">
+          <End Role="Distribuidora" Type="Self.Distribuidora" Multiplicity="1" />
+          <End Role="Disco" Type="Self.Disco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distribuidora">
+              <PropertyRef Name="IdDistribuidora" />
+            </Principal>
+            <Dependent Role="Disco">
+              <PropertyRef Name="IdDistribuidora" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Disco__IdGenero__1BFD2C07">
+          <End Role="GeneroMusical" Type="Self.GeneroMusical" Multiplicity="1" />
+          <End Role="Disco" Type="Self.Disco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeneroMusical">
+              <PropertyRef Name="IdGenero" />
+            </Principal>
+            <Dependent Role="Disco">
+              <PropertyRef Name="IdGenero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ArtistaGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="DiscoAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Titulo" Type="varchar" Mode="In" />
+          <Parameter Name="Duracion" Type="time" Mode="In" />
+          <Parameter Name="Anio" Type="date" Mode="In" />
+          <Parameter Name="Ventas" Type="int" Mode="In" />
+          <Parameter Name="Disponibilidad" Type="char" Mode="In" />
+          <Parameter Name="IdArtista" Type="int" Mode="In" />
+          <Parameter Name="IdGenero" Type="int" Mode="In" />
+          <Parameter Name="IdDistribuidora" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DiscoDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdDisco" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DiscoGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="DiscoGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdDisco" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DiscoUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdDisco" Type="int" Mode="In" />
+          <Parameter Name="Titulo" Type="varchar" Mode="In" />
+          <Parameter Name="Duracion" Type="time" Mode="In" />
+          <Parameter Name="Anio" Type="date" Mode="In" />
+          <Parameter Name="Ventas" Type="int" Mode="In" />
+          <Parameter Name="Disponibilidad" Type="char" Mode="In" />
+          <Parameter Name="IdArtista" Type="int" Mode="In" />
+          <Parameter Name="IdGenero" Type="int" Mode="In" />
+          <Parameter Name="IdDistribuidora" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DistribuidoraGetALL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GeneroGetALL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="BRodriguezPruebaTecnica2CompletaModelStoreContainer">
+          <EntitySet Name="Artista" EntityType="Self.Artista" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Disco" EntityType="Self.Disco" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Distribuidora" EntityType="Self.Distribuidora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GeneroMusical" EntityType="Self.GeneroMusical" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Disco__IdArtista__1B0907CE" Association="Self.FK__Disco__IdArtista__1B0907CE">
+            <End Role="Artista" EntitySet="Artista" />
+            <End Role="Disco" EntitySet="Disco" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Disco__IdDistrib__1CF15040" Association="Self.FK__Disco__IdDistrib__1CF15040">
+            <End Role="Distribuidora" EntitySet="Distribuidora" />
+            <End Role="Disco" EntitySet="Disco" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Disco__IdGenero__1BFD2C07" Association="Self.FK__Disco__IdGenero__1BFD2C07">
+            <End Role="GeneroMusical" EntitySet="GeneroMusical" />
+            <End Role="Disco" EntitySet="Disco" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BRodriguezPruebaTecnica2CompletaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Artista">
+          <Key>
+            <PropertyRef Name="IdArtista" />
+          </Key>
+          <Property Name="IdArtista" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NombreAtistico" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Discoes" Relationship="Self.FK__Disco__IdArtista__1B0907CE" FromRole="Artista" ToRole="Disco" />
+        </EntityType>
+        <EntityType Name="Disco">
+          <Key>
+            <PropertyRef Name="IdDisco" />
+          </Key>
+          <Property Name="IdDisco" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Duracion" Type="Time" Precision="7" />
+          <Property Name="Anio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Ventas" Type="Int32" />
+          <Property Name="Disponibilidad" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="IdArtista" Type="Int32" Nullable="false" />
+          <Property Name="IdGenero" Type="Int32" Nullable="false" />
+          <Property Name="IdDistribuidora" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Artista" Relationship="Self.FK__Disco__IdArtista__1B0907CE" FromRole="Disco" ToRole="Artista" />
+          <NavigationProperty Name="Distribuidora" Relationship="Self.FK__Disco__IdDistrib__1CF15040" FromRole="Disco" ToRole="Distribuidora" />
+          <NavigationProperty Name="GeneroMusical" Relationship="Self.FK__Disco__IdGenero__1BFD2C07" FromRole="Disco" ToRole="GeneroMusical" />
+        </EntityType>
+        <EntityType Name="Distribuidora">
+          <Key>
+            <PropertyRef Name="IdDistribuidora" />
+          </Key>
+          <Property Name="IdDistribuidora" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PorcentajeDistribucion" Type="Int32" />
+          <Property Name="FechaNCreacion" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Discoes" Relationship="Self.FK__Disco__IdDistrib__1CF15040" FromRole="Distribuidora" ToRole="Disco" />
+        </EntityType>
+        <EntityType Name="GeneroMusical">
+          <Key>
+            <PropertyRef Name="IdGenero" />
+          </Key>
+          <Property Name="IdGenero" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Discoes" Relationship="Self.FK__Disco__IdGenero__1BFD2C07" FromRole="GeneroMusical" ToRole="Disco" />
+        </EntityType>
+        <Association Name="FK__Disco__IdArtista__1B0907CE">
+          <End Role="Artista" Type="Self.Artista" Multiplicity="1" />
+          <End Role="Disco" Type="Self.Disco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artista">
+              <PropertyRef Name="IdArtista" />
+            </Principal>
+            <Dependent Role="Disco">
+              <PropertyRef Name="IdArtista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Disco__IdDistrib__1CF15040">
+          <End Role="Distribuidora" Type="Self.Distribuidora" Multiplicity="1" />
+          <End Role="Disco" Type="Self.Disco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distribuidora">
+              <PropertyRef Name="IdDistribuidora" />
+            </Principal>
+            <Dependent Role="Disco">
+              <PropertyRef Name="IdDistribuidora" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Disco__IdGenero__1BFD2C07">
+          <End Role="GeneroMusical" Type="Self.GeneroMusical" Multiplicity="1" />
+          <End Role="Disco" Type="Self.Disco" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GeneroMusical">
+              <PropertyRef Name="IdGenero" />
+            </Principal>
+            <Dependent Role="Disco">
+              <PropertyRef Name="IdGenero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BRodriguezPruebaTecnica2CompletaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Artistas" EntityType="Self.Artista" />
+          <EntitySet Name="Discoes" EntityType="Self.Disco" />
+          <EntitySet Name="Distribuidoras" EntityType="Self.Distribuidora" />
+          <EntitySet Name="GeneroMusicals" EntityType="Self.GeneroMusical" />
+          <AssociationSet Name="FK__Disco__IdArtista__1B0907CE" Association="Self.FK__Disco__IdArtista__1B0907CE">
+            <End Role="Artista" EntitySet="Artistas" />
+            <End Role="Disco" EntitySet="Discoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Disco__IdDistrib__1CF15040" Association="Self.FK__Disco__IdDistrib__1CF15040">
+            <End Role="Distribuidora" EntitySet="Distribuidoras" />
+            <End Role="Disco" EntitySet="Discoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Disco__IdGenero__1BFD2C07" Association="Self.FK__Disco__IdGenero__1BFD2C07">
+            <End Role="GeneroMusical" EntitySet="GeneroMusicals" />
+            <End Role="Disco" EntitySet="Discoes" />
+          </AssociationSet>
+          <FunctionImport Name="ArtistaGetAll" ReturnType="Collection(BRodriguezPruebaTecnica2CompletaModel.ArtistaGetAll_Result)" />
+          <FunctionImport Name="DiscoAdd">
+            <Parameter Name="Titulo" Mode="In" Type="String" />
+            <Parameter Name="Duracion" Mode="In" Type="Time" />
+            <Parameter Name="Anio" Mode="In" Type="DateTime" />
+            <Parameter Name="Ventas" Mode="In" Type="Int32" />
+            <Parameter Name="Disponibilidad" Mode="In" Type="String" />
+            <Parameter Name="IdArtista" Mode="In" Type="Int32" />
+            <Parameter Name="IdGenero" Mode="In" Type="Int32" />
+            <Parameter Name="IdDistribuidora" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DiscoDelete">
+          <Parameter Name="IdDisco" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DiscoUpdate">
+            <Parameter Name="IdDisco" Mode="In" Type="Int32" />
+            <Parameter Name="Titulo" Mode="In" Type="String" />
+            <Parameter Name="Duracion" Mode="In" Type="Time" />
+            <Parameter Name="Anio" Mode="In" Type="DateTime" />
+            <Parameter Name="Ventas" Mode="In" Type="Int32" />
+            <Parameter Name="Disponibilidad" Mode="In" Type="String" />
+            <Parameter Name="IdArtista" Mode="In" Type="Int32" />
+            <Parameter Name="IdGenero" Mode="In" Type="Int32" />
+            <Parameter Name="IdDistribuidora" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DistribuidoraGetALL" ReturnType="Collection(BRodriguezPruebaTecnica2CompletaModel.DistribuidoraGetALL_Result)" />
+          <FunctionImport Name="GeneroGetALL" ReturnType="Collection(BRodriguezPruebaTecnica2CompletaModel.GeneroGetALL_Result)" />
+          <FunctionImport Name="DiscoGetAll" ReturnType="Collection(BRodriguezPruebaTecnica2CompletaModel.DiscoGetAll_Result)" />
+          <FunctionImport Name="DiscoGetById" ReturnType="Collection(BRodriguezPruebaTecnica2CompletaModel.DiscoGetById_Result)">
+            <Parameter Name="IdDisco" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="ArtistaGetAll_Result">
+          <Property Type="Int32" Name="IdArtista" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoMaterno" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaNacimiento" Nullable="false" />
+          <Property Type="String" Name="NombreAtistico" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="DistribuidoraGetALL_Result">
+          <Property Type="Int32" Name="IdDistribuidora" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaNCreacion" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GeneroGetALL_Result">
+          <Property Type="Int32" Name="IdGenero" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="DiscoGetAll_Result">
+          <Property Type="Int32" Name="IdDisco" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="false" MaxLength="50" />
+          <Property Type="Time" Name="Duracion" Nullable="true" />
+          <Property Type="DateTime" Name="Anio" Nullable="false" />
+          <Property Type="Int32" Name="Ventas" Nullable="true" />
+          <Property Type="String" Name="Disponibilidad" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="IdArtista" Nullable="false" />
+          <Property Type="String" Name="NombreArtista" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="NombreAtistico" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdGenero" Nullable="false" />
+          <Property Type="String" Name="NombreGenero" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdDistribuidora" Nullable="false" />
+          <Property Type="String" Name="NombreDistribuidora" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="DiscoGetById_Result">
+          <Property Type="Int32" Name="IdDisco" Nullable="false" />
+          <Property Type="String" Name="Titulo" Nullable="false" MaxLength="50" />
+          <Property Type="Time" Name="Duracion" Nullable="true" />
+          <Property Type="DateTime" Name="Anio" Nullable="false" />
+          <Property Type="Int32" Name="Ventas" Nullable="true" />
+          <Property Type="String" Name="Disponibilidad" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="IdArtista" Nullable="false" />
+          <Property Type="String" Name="NombreArtista" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="NombreAtistico" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdGenero" Nullable="false" />
+          <Property Type="String" Name="NombreGenero" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdDistribuidora" Nullable="false" />
+          <Property Type="String" Name="NombreDistribuidora" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BRodriguezPruebaTecnica2CompletaModelStoreContainer" CdmEntityContainer="BRodriguezPruebaTecnica2CompletaEntities">
+          <EntitySetMapping Name="Artistas">
+            <EntityTypeMapping TypeName="BRodriguezPruebaTecnica2CompletaModel.Artista">
+              <MappingFragment StoreEntitySet="Artista">
+                <ScalarProperty Name="IdArtista" ColumnName="IdArtista" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="NombreAtistico" ColumnName="NombreAtistico" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Discoes">
+            <EntityTypeMapping TypeName="BRodriguezPruebaTecnica2CompletaModel.Disco">
+              <MappingFragment StoreEntitySet="Disco">
+                <ScalarProperty Name="IdDisco" ColumnName="IdDisco" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Duracion" ColumnName="Duracion" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="Ventas" ColumnName="Ventas" />
+                <ScalarProperty Name="Disponibilidad" ColumnName="Disponibilidad" />
+                <ScalarProperty Name="IdArtista" ColumnName="IdArtista" />
+                <ScalarProperty Name="IdGenero" ColumnName="IdGenero" />
+                <ScalarProperty Name="IdDistribuidora" ColumnName="IdDistribuidora" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Distribuidoras">
+            <EntityTypeMapping TypeName="BRodriguezPruebaTecnica2CompletaModel.Distribuidora">
+              <MappingFragment StoreEntitySet="Distribuidora">
+                <ScalarProperty Name="IdDistribuidora" ColumnName="IdDistribuidora" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="PorcentajeDistribucion" ColumnName="PorcentajeDistribucion" />
+                <ScalarProperty Name="FechaNCreacion" ColumnName="FechaNCreacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GeneroMusicals">
+            <EntityTypeMapping TypeName="BRodriguezPruebaTecnica2CompletaModel.GeneroMusical">
+              <MappingFragment StoreEntitySet="GeneroMusical">
+                <ScalarProperty Name="IdGenero" ColumnName="IdGenero" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ArtistaGetAll" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.ArtistaGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BRodriguezPruebaTecnica2CompletaModel.ArtistaGetAll_Result">
+                <ScalarProperty Name="IdArtista" ColumnName="IdArtista" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="NombreAtistico" ColumnName="NombreAtistico" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DiscoAdd" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.DiscoAdd" />
+          <FunctionImportMapping FunctionImportName="DiscoDelete" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.DiscoDelete" />
+          <FunctionImportMapping FunctionImportName="DiscoUpdate" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.DiscoUpdate" />
+          <FunctionImportMapping FunctionImportName="DistribuidoraGetALL" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.DistribuidoraGetALL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BRodriguezPruebaTecnica2CompletaModel.DistribuidoraGetALL_Result">
+                <ScalarProperty Name="IdDistribuidora" ColumnName="IdDistribuidora" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="FechaNCreacion" ColumnName="FechaNCreacion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GeneroGetALL" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.GeneroGetALL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BRodriguezPruebaTecnica2CompletaModel.GeneroGetALL_Result">
+                <ScalarProperty Name="IdGenero" ColumnName="IdGenero" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DiscoGetAll" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.DiscoGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BRodriguezPruebaTecnica2CompletaModel.DiscoGetAll_Result">
+                <ScalarProperty Name="IdDisco" ColumnName="IdDisco" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Duracion" ColumnName="Duracion" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="Ventas" ColumnName="Ventas" />
+                <ScalarProperty Name="Disponibilidad" ColumnName="Disponibilidad" />
+                <ScalarProperty Name="IdArtista" ColumnName="IdArtista" />
+                <ScalarProperty Name="NombreArtista" ColumnName="NombreArtista" />
+                <ScalarProperty Name="NombreAtistico" ColumnName="NombreAtistico" />
+                <ScalarProperty Name="IdGenero" ColumnName="IdGenero" />
+                <ScalarProperty Name="NombreGenero" ColumnName="NombreGenero" />
+                <ScalarProperty Name="IdDistribuidora" ColumnName="IdDistribuidora" />
+                <ScalarProperty Name="NombreDistribuidora" ColumnName="NombreDistribuidora" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DiscoGetById" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.DiscoGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BRodriguezPruebaTecnica2CompletaModel.DiscoGetById_Result">
+                <ScalarProperty Name="IdDisco" ColumnName="IdDisco" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Duracion" ColumnName="Duracion" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="Ventas" ColumnName="Ventas" />
+                <ScalarProperty Name="Disponibilidad" ColumnName="Disponibilidad" />
+                <ScalarProperty Name="IdArtista" ColumnName="IdArtista" />
+                <ScalarProperty Name="NombreArtista" ColumnName="NombreArtista" />
+                <ScalarProperty Name="NombreAtistico" ColumnName="NombreAtistico" />
+                <ScalarProperty Name="IdGenero" ColumnName="IdGenero" />
+                <ScalarProperty Name="NombreGenero" ColumnName="NombreGenero" />
+                <ScalarProperty Name="IdDistribuidora" ColumnName="IdDistribuidora" />
+                <ScalarProperty Name="NombreDistribuidora" ColumnName="NombreDistribuidora" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

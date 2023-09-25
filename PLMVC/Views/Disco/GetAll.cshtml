@@ -1,0 +1,55 @@
+﻿@model ML.Disco
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>LISTA GENERAL DE DISCOS</h2>
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-striped table-light">
+            <tr>
+                <th>EDITAR</th>
+                <th>ELIMINAR</th>
+                <th>ID DISCO</th>
+                <th>TITULO DISCO</th>
+                <th>DURACION</th>
+                <th>AÑO CREACION</th>
+                <th>DISPONIBILIDAD</th>
+                <th>VENTAS</th>
+                <th>ID ARTISTA</th>
+                <th>ARTISTA</th>
+                <th>ID DISTRIBUIDORA</th>
+                <th>DISTRIBUIDORA</th>
+                <th>ID GENERO</th>
+                <th>GENERO</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(ML.Disco registro in Model.Discos)
+            {
+                <tr>
+                    <td><a href="@Url.Action("Form", "Disco", new {idDisco = registro.IdDisco})" type="button" class="btn btn-warning"> EDITAR </a> </td>
+                    <td><a href="@Url.Action("Delete", "Disco", new { idDisco = registro.IdDisco })" onclick=" return confirm('¿Seguro que desea elimiar el registro?');" type="button" class="btn btn-danger"> ELIMINAR </a> </td>
+                    <td>@registro.IdDisco </td>
+                    <td>@registro.Titulo  </td>
+                    <td>@registro.Duracion </td>
+                    <td>@registro.Año </td>
+                    <td>@registro.Disponibilidad  </td>
+                    <td>@registro.Ventas  </td>
+                    <td>@registro.Artista.IdArtista  </td>
+                    <td>@registro.Artista.NombreArtistico  </td>
+                    <td>@registro.Distribuidora.IdDistribuidora </td>
+                    <td>@registro.Distribuidora.Nombre </td>
+                    <td>@registro.Genero.IdGenero</td>
+                    <td>@registro.Genero.Nombre</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="text-right">
+    <a href="@Url.Action("Form","Disco")" type="button" class="btn btn-outline-success"> AÑADIR NUEVO DISCO</a>
+</div>
