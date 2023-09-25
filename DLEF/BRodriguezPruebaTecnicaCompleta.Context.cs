@@ -147,5 +147,77 @@ namespace DLEF
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DiscoGetById_Result>("DiscoGetById", idDiscoParameter);
         }
+    
+        public virtual int ArtistaAdd(string nombre, string apellidoPaterno, string apellidoMaterno, Nullable<System.DateTime> fechaNacimiento, string nombreArtistico)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoPaternoParameter = apellidoPaterno != null ?
+                new ObjectParameter("ApellidoPaterno", apellidoPaterno) :
+                new ObjectParameter("ApellidoPaterno", typeof(string));
+    
+            var apellidoMaternoParameter = apellidoMaterno != null ?
+                new ObjectParameter("ApellidoMaterno", apellidoMaterno) :
+                new ObjectParameter("ApellidoMaterno", typeof(string));
+    
+            var fechaNacimientoParameter = fechaNacimiento.HasValue ?
+                new ObjectParameter("FechaNacimiento", fechaNacimiento) :
+                new ObjectParameter("FechaNacimiento", typeof(System.DateTime));
+    
+            var nombreArtisticoParameter = nombreArtistico != null ?
+                new ObjectParameter("NombreArtistico", nombreArtistico) :
+                new ObjectParameter("NombreArtistico", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ArtistaAdd", nombreParameter, apellidoPaternoParameter, apellidoMaternoParameter, fechaNacimientoParameter, nombreArtisticoParameter);
+        }
+    
+        public virtual ObjectResult<ArtistaGetById_Result> ArtistaGetById(Nullable<int> idArtista)
+        {
+            var idArtistaParameter = idArtista.HasValue ?
+                new ObjectParameter("IdArtista", idArtista) :
+                new ObjectParameter("IdArtista", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ArtistaGetById_Result>("ArtistaGetById", idArtistaParameter);
+        }
+    
+        public virtual int ArtistaUpdate(Nullable<int> idArtista, string nombre, string apellidoPaterno, string apellidoMaterno, Nullable<System.DateTime> fechaNacimiento, string nombreArtistico)
+        {
+            var idArtistaParameter = idArtista.HasValue ?
+                new ObjectParameter("IdArtista", idArtista) :
+                new ObjectParameter("IdArtista", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoPaternoParameter = apellidoPaterno != null ?
+                new ObjectParameter("ApellidoPaterno", apellidoPaterno) :
+                new ObjectParameter("ApellidoPaterno", typeof(string));
+    
+            var apellidoMaternoParameter = apellidoMaterno != null ?
+                new ObjectParameter("ApellidoMaterno", apellidoMaterno) :
+                new ObjectParameter("ApellidoMaterno", typeof(string));
+    
+            var fechaNacimientoParameter = fechaNacimiento.HasValue ?
+                new ObjectParameter("FechaNacimiento", fechaNacimiento) :
+                new ObjectParameter("FechaNacimiento", typeof(System.DateTime));
+    
+            var nombreArtisticoParameter = nombreArtistico != null ?
+                new ObjectParameter("NombreArtistico", nombreArtistico) :
+                new ObjectParameter("NombreArtistico", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ArtistaUpdate", idArtistaParameter, nombreParameter, apellidoPaternoParameter, apellidoMaternoParameter, fechaNacimientoParameter, nombreArtisticoParameter);
+        }
+    
+        public virtual int ArtistaDelete(Nullable<int> idArtista)
+        {
+            var idArtistaParameter = idArtista.HasValue ?
+                new ObjectParameter("IdArtista", idArtista) :
+                new ObjectParameter("IdArtista", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ArtistaDelete", idArtistaParameter);
+        }
     }
 }

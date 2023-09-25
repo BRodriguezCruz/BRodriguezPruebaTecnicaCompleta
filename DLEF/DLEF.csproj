@@ -59,6 +59,9 @@
     <Compile Include="ArtistaGetAll_Result.cs">
       <DependentUpon>BRodriguezPruebaTecnicaCompleta.tt</DependentUpon>
     </Compile>
+    <Compile Include="ArtistaGetById_Result.cs">
+      <DependentUpon>BRodriguezPruebaTecnicaCompleta.tt</DependentUpon>
+    </Compile>
     <Compile Include="BRodriguezPruebaTecnicaCompleta.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

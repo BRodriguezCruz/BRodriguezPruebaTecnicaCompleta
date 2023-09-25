@@ -83,7 +83,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ArtistaAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoPaterno" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoMaterno" Type="varchar" Mode="In" />
+          <Parameter Name="FechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="NombreArtistico" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ArtistaDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdArtista" Type="int" Mode="In" />
+        </Function>
         <Function Name="ArtistaGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ArtistaGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdArtista" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ArtistaUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdArtista" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoPaterno" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoMaterno" Type="varchar" Mode="In" />
+          <Parameter Name="FechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="NombreArtistico" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="DiscoAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Titulo" Type="varchar" Mode="In" />
           <Parameter Name="Duracion" Type="time" Mode="In" />
@@ -266,7 +287,28 @@
           <FunctionImport Name="GeneroGetALL" ReturnType="Collection(BRodriguezPruebaTecnica2CompletaModel.GeneroGetALL_Result)" />
           <FunctionImport Name="DiscoGetAll" ReturnType="Collection(BRodriguezPruebaTecnica2CompletaModel.DiscoGetAll_Result)" />
           <FunctionImport Name="DiscoGetById" ReturnType="Collection(BRodriguezPruebaTecnica2CompletaModel.DiscoGetById_Result)">
-            <Parameter Name="IdDisco" Mode="In" Type="Int32" />
+          <Parameter Name="IdDisco" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ArtistaAdd">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="ApellidoPaterno" Mode="In" Type="String" />
+            <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
+            <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="NombreArtistico" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ArtistaGetById" ReturnType="Collection(BRodriguezPruebaTecnica2CompletaModel.ArtistaGetById_Result)">
+          <Parameter Name="IdArtista" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ArtistaUpdate">
+            <Parameter Name="IdArtista" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="ApellidoPaterno" Mode="In" Type="String" />
+            <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
+            <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="NombreArtistico" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ArtistaDelete">
+            <Parameter Name="IdArtista" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ArtistaGetAll_Result">
@@ -315,6 +357,13 @@
           <Property Type="String" Name="NombreGenero" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="IdDistribuidora" Nullable="false" />
           <Property Type="String" Name="NombreDistribuidora" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ArtistaGetById_Result">
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoMaterno" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaNacimiento" Nullable="false" />
+          <Property Type="String" Name="NombreAtistico" Nullable="false" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -438,6 +487,20 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ArtistaAdd" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.ArtistaAdd" />
+          <FunctionImportMapping FunctionImportName="ArtistaGetById" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.ArtistaGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BRodriguezPruebaTecnica2CompletaModel.ArtistaGetById_Result">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="NombreAtistico" ColumnName="NombreAtistico" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ArtistaUpdate" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.ArtistaUpdate" />
+          <FunctionImportMapping FunctionImportName="ArtistaDelete" FunctionName="BRodriguezPruebaTecnica2CompletaModel.Store.ArtistaDelete" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

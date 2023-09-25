@@ -1,0 +1,42 @@
+﻿@model ML.Artista
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>RELLENE LOS CAMPOS</h2>
+<br />
+@using (Html.BeginForm("Form", "Artista", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.IdArtista)
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Nombre)
+            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.ApellidoPaterno)
+            @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.ApellidoMaterno)
+            @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.FechaNacimiento)
+            @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @Type = "date" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.NombreArtistico)
+            @Html.TextBoxFor(model => model.NombreArtistico, new { @class = "form-control" })
+        </div>
+
+    </div>
+    <br />
+    <button class="btn btn-success" type="submit">HECHO</button>
+    <a href="@Url.Action("GetAll", "Artista")" class="btn btn-warning">VOLVER</a>
+}
